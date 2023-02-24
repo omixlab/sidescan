@@ -1,2 +1,2 @@
-data/siders/*
-!data/siders/.gitkeep
+data/*
+!data/.gitkeep

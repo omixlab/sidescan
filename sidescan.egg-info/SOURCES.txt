@@ -4,6 +4,7 @@ sidescan/__init__.py
 sidescan/cli.py
 sidescan/download.py
 sidescan/features.py
+sidescan/logo.py
 sidescan/model.py
 sidescan/preprocess.py
 sidescan/search.py
