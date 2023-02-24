@@ -18,3 +18,26 @@ $ sidescan-download data/
 ```
 
 ## Preprocess datasets
+
+```
+$ sidescan-preprocess data/
+```
+
+## Train model
+
+```
+$ sidescan-train data/
+```
+
+
+## Predict side effects for molecule
+
+```
+$ sidescan-search --input molecule.sdf --model data/models.pickle --output molecule.json
+```
+
+## Run server
+
+```
+$ sidescan-server
+```
