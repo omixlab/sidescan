@@ -1,0 +1,5 @@
+[console_scripts]
+sidescan-download = sidescan.download:main
+sidescan-preprocess = sidescan.preprocess:main
+sidescan-search = sidescan.search:main
+sidescan-train = sidescan.train:main

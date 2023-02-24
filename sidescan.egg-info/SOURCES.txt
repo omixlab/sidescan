@@ -1,0 +1,17 @@
+README.md
+setup.py
+sidescan/__init__.py
+sidescan/cli.py
+sidescan/download.py
+sidescan/features.py
+sidescan/model.py
+sidescan/preprocess.py
+sidescan/search.py
+sidescan/server.py
+sidescan/train.py
+sidescan.egg-info/PKG-INFO
+sidescan.egg-info/SOURCES.txt
+sidescan.egg-info/dependency_links.txt
+sidescan.egg-info/entry_points.txt
+sidescan.egg-info/requires.txt
+sidescan.egg-info/top_level.txt

@@ -1,0 +1,42 @@
+[
+    {
+        "index": 0,
+        "InchI": "InChI=1S/C9H8O4/c1-6(10)13-8-5-3-2-4-7(8)9(11)12/h2-5H,1H3,(H,11,12)",
+        "InchI_key": "BSYNRYMUTXBXSQ-UHFFFAOYSA-N",
+        "SMILES": "CC(=O)Oc1ccccc1C(=O)O",
+        "side_effects": {
+            "Proctocolitis": 0.05,
+            "Constipation": 0.0,
+            "Fatigue": 0.21,
+            "Asthenia": 0.0,
+            "Headache": 0.0,
+            "Diarrhoea": 1.0,
+            "Dizziness": 1.0,
+            "Rash": 0.71,
+            "Dermatitis": 0.67,
+            "Nausea": 1.0,
+            "Vomiting": 0.42,
+            "Somnolence": 1.0,
+            "Lymphocyte count decreased": 0.05,
+            "Injection site haematoma": 0.0,
+            "Leukoderma": 0.0,
+            "Nephropathy toxic": 0.0,
+            "Dermatitis acneiform": 0.0,
+            "WBC abnormal NOS": 0.0,
+            "Iris hyperpigmentation": 0.0,
+            "Breast tenderness": 0.04,
+            "Cardiac output decreased": 0.0,
+            "Neuromyopathy": 0.0,
+            "Foetal distress syndrome": 0.0,
+            "Colonic pseudo-obstruction": 0.0,
+            "Genital disorder male": 0.0,
+            "Piloerection": 0.09,
+            "Vaginal discomfort": 0.0,
+            "Pituitary-dependent Cushing's syndrome": 0.0,
+            "Hyperadrenocorticism": 0.0,
+            "Genital disorder female": 0.0,
+            "Abdominal pain localised": 0.0,
+            "Genital infection fungal": 0.0
+        }
+    }
+]
