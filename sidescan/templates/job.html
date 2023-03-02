@@ -1,2 +1,36 @@
-<h1>Enviada</h1>
-{{ molecule }}
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block styles %}
+{{ super() }}
+	<style>
+		body { background: #e8f1f9; }
+	</style>
+{% endblock %}
+
+
+{% block title %}
+Molecula Enviada
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="ccol-md-4 col-lg-offset-4">
+
+      <h1 class="pt-5 pb-2">Sua Molecula({{ filename }})foi enviada!</h1>
+      <img src="{{ url_for('static', filename='imgs/'+filename) }}"
+
+    </div>
+</div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
