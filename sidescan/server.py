@@ -1,14 +1,21 @@
 import os
-from flask import Flask, render_template, session, redirect, url_for, request
+from flask import Flask, render_template, session, redirect, url_for, request, jsonify
 from werkzeug.utils import secure_filename
 #from flask_wtf import FlaskForm
 #from wtforms import StringField, SubmitField
 #from wtforms.validators import DataRequired
 from flask_bootstrap import Bootstrap
+from celery.result import AsyncResult
+import celery
+import uuid
+
 
 app = Flask(__name__)
+broker = celery.Celery(broker='redis://localhost:6379', backend='redis://localhost:6379')
 bootstrap = Bootstrap(app)
-app.config['UPLOAD_PATH'] = '/home/lucasmocellin/project/sidescan/sidescan/static/imgs'
+app.config['UPLOAD_PATH'] = '/home/lucasmocellin/project/sidescan/sidescan/static/uploads'
+
+from sidescan.worker import run_sidescan
 
 @app.route('/')
 def index():
@@ -18,35 +25,31 @@ def index():
 def upload_files():
     uploaded_file = request.files['file']
     filename = secure_filename(uploaded_file.filename)
+
+    project_id = str(uuid.uuid4())
+    project_directory = os.path.join(app.config['UPLOAD_PATH'], project_id)
+    project_output = os.path.join(project_directory, 'predictions.json')
+
+    os.system(f"mkdir -p {project_directory}")
     if filename != '':
         file_ext = os.path.splitext(filename)[1]
-        #if file_ext not in app.config['UPLOAD_EXTENSIONS']:
-          #  abort(400)
-        uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
-        print (filename)
-    return render_template('job.html', filename=filename)
+        
+        project_input = os.path.join(project_directory, filename)
+        uploaded_file.save(project_input)
+
+        async_result = run_sidescan.apply_async((project_input, project_output))
+
+    return redirect(f'/jobs/{async_result.task_id}')
+
+@app.route('/jobs/<job_id>')
+def jobs(job_id):
+  result = AsyncResult(job_id, app=broker)
+  if result.status == 'SUCCESS':
+    return render_template('job.html', results=result.get())
+  else:
+    return render_template('job.html', status=resul.status)
 
 
-#class NameForm(FlaskForm):
-  #  molecule = StringField( validators=[DataRequired()])
- #   submit = SubmitField('Submit')
-
-
-
-#@app.route('/', methods=['GET', 'POST'])
-#def index():
-   #form = NameForm()
-   #if form.validate_on_submit():
-    #    session['name'] = form.molecule.data
-    #    return redirect(url_for('index'))
-   #return render_template('index.html', form=form, name=session.get('name'))
-
-#@app.route('/upload', methods=['post'])
-#def upload():
-   # form = NameForm()
-  #  if form.validate_on_submit():
-  #      print(form.molecule)
-  #  return render_template('job.html', molecule=form.molecule.data)
 
 
 def main():
