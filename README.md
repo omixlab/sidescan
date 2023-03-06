@@ -9,6 +9,13 @@ $ conda env create
 $ conda activate sidescan
 ```
 
+## Saving
+```
+git add .
+git commit -m 'descrição'
+git push -u origin 'nome da branch'
+```
+
 ## Download datasets
 
 Downloads data from the SIDERS (side effects database) to the `data/` directory.

@@ -44,11 +44,8 @@ def upload_files():
 @app.route('/jobs/<job_id>')
 def jobs(job_id):
   result = AsyncResult(job_id, app=broker)
-  if result.status == 'SUCCESS':
-    return render_template('job.html', results=result.get())
-  else:
-    return render_template('job.html', status=resul.status)
-
+  return render_template('job.html', result=result, job_id=job_id, json=json)
+  
 
 
 
