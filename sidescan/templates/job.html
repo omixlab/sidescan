@@ -23,9 +23,11 @@ Molecula Enviada
       <h1 class="pt-5 pb-2">Sua Molecula foi enviada e será processada!</h1>
       <h1 class="pt-5 pb-2">Seu link de acesso para os resultado é: </h1>
       <a href="/jobs/{{job_id}}">results</a> 
-      <h1>Status: {{result.status}}</h1>
-      {% if result.status == "SUCCESS": %}
-        <h1>{{result.get()}}</h1>
+      <h1>Status: {{result_status}}</h1>
+      {% if result_status == "SUCCESS": %}
+        {% for result in result_data %}
+          {{ result['InchI'] }}
+        {% endfor %}
       {% endif %}
     </div>
 </div>
