@@ -14,27 +14,26 @@ A molecula é recebida e entao se mostra a mensagem "sua molecula foi recebida"-
 
 
 {% block title %}
-Envio de Molecula
+Home
 {% endblock %}
 
 
 {% block content %}
 
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12">
-      <h1>Wlecome to Sidescan!</h1>
+<div class="container" >
+ <div class="pt-0 pb-5">
+      <h1>Welcome to Sidescan!</h1>
 
-      <p class="lead">Por favor insira a molecula desejada:</p>
+      <p class="lead">Send your molecule here:</p>
       <form method="POST" action="" enctype="multipart/form-data">
-        <p><input type="file" name="file"></p>
-        <p><input type="submit" value="Submit"></p>
+        <p><input  type="file" name="file"></p>
+        <p><input  type="submit" value="Submit"></p>
       </form>
     
     <p class="pt-5"><strong>{{ message }}</strong></p>
 
-</div>
-</div>
+  </div>
+
 </div>
 
 {% endblock %}
