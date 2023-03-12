@@ -14,7 +14,7 @@ import json
 app = Flask(__name__)
 broker = celery.Celery(broker='redis://localhost:6379', backend='redis://localhost:6379')
 bootstrap = Bootstrap(app)
-app.config['UPLOAD_PATH'] = '/home/lucasmocellin/project/sidescan/sidescan/static/uploads'
+app.config['UPLOAD_PATH'] = 'sidescan/static/uploads'
 
 from sidescan.worker import run_sidescan
 
