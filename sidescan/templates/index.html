@@ -1,22 +1,26 @@
-<!--Criar um form onde se envia uma molecula
-A molecula é recebida e entao se mostra a mensagem "sua molecula foi recebida"-->
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form method="POST" action="/upload">
-        {{ form.hidden_tag() }}
-        {{ form.molecule.label }} {{ form.molecule() }}
-        {{ form.submit() }}
-    </form>
+{% block content %}
+
+<div class="container" >
+ <div class="pt-0 pb-5">
+      <h1>Welcome to Sidescan!</h1>
+
+      <p class="lead">Send your molecule here:</p>
+      <form method="POST" action="" enctype="multipart/form-data">
+        <p><input  type="file" name="file"></p>
+        <p><input  type="submit" value="Submit"></p>
+      </form>
     
-    
-</body>
-</html>
+    <p class="pt-5"><strong>{{ message }}</strong></p>
+
+  </div>
+
+</div>
+
+{% endblock %}

@@ -6,3 +6,47 @@ Author: Frederico Schmitt Kremer
 Author-email: fred.s.kremer@gmail.com
 Keywords: chemoinformatics
 Description-Content-Type: text/markdown
+
+# Sidescan
+
+## Installing
+
+```
+$ git clone git@github.com:omixlab/sidescan.git
+$ cd sidescan
+$ conda env create
+$ conda activate sidescan
+```
+
+## Download datasets
+
+Downloads data from the SIDERS (side effects database) to the `data/` directory.
+
+```
+$ sidescan-download data/
+```
+
+## Preprocess datasets
+
+```
+$ sidescan-preprocess data/
+```
+
+## Train model
+
+```
+$ sidescan-train data/
+```
+
+
+## Predict side effects for molecule
+
+```
+$ sidescan-search --input molecule.sdf --model data/models.pickle --output molecule.json
+```
+
+## Run server
+
+```
+$ sidescan-server
+```

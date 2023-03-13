@@ -1,2 +1,42 @@
-<h1>Enviada</h1>
-{{ molecule }}
+{% extends 'base.html' %}
+
+{% block title %}
+Molecula Enviada
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="ccol-md-4 col-lg-offset-4">
+
+      <h1 class="pt-5 pb-2">You're molecule has been processed!</h1>
+      <h1 class="pt-5 pb-2">Your access link is: </h1>
+      <a href="/jobs/{{job_id}}">Results</a> 
+      <h1>Status: {{result_status}}</h1>
+      {% if result_status == "SUCCESS": %}
+        {% for result in result_data %}
+          Molecule ID: {{ result['index'] }} <br>
+          Molecule InChI: {{ result['InchI'] }} <br>
+          Molecule Key: {{ result['InchI_key']}} <br>
+          Molecule Smile: {{ result['SMILES']}} <br>
+          <table border="1">
+            <tr><td>Molecule</td><td>Probability</td></tr> 
+          {% for effect in result['side_effects'] %}
+          <tr>  <td>{{ effect }}</td> <td>{{result['side_effects'][effect]}} </td></tr> 
+          {% endfor %}
+          </table>
+        {% endfor %}
+      {% endif %}
+    </div>
+</div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
