@@ -2,9 +2,12 @@ Metadata-Version: 2.1
 Name: sidescan
 Version: 0.0.2
 Summary: Prediction of side effects of drugs
+Home-page: UNKNOWN
 Author: Frederico Schmitt Kremer
 Author-email: fred.s.kremer@gmail.com
+License: UNKNOWN
 Keywords: chemoinformatics
+Platform: UNKNOWN
 Description-Content-Type: text/markdown
 
 # Sidescan
@@ -28,7 +31,8 @@ git push -u origin 'nome da branch'
 ## ???
 
 ```
-$sudo apt-get install libxrender1
+$ sudo apt-get install libxrender1
+$ sudo apt-get install redis-server
 ```
 
 ## Download datasets
@@ -48,14 +52,14 @@ $ sidescan-train data/
 $ sidescan-search --input molecule.sdf --model data/models.pickle --output molecule.json
 ```
 
-## Redis (celery?)
+## Run celery
 ```
-$ sudo apt-get install redis-server
-$ sudo service redis-server start
+$ celery -A sidescan.worker.broker worker
 ```
 
 ## Run server
 
 ```
-$ sidescan-server run
+$ sidescan-server
 ```
+

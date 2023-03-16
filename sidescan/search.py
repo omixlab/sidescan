@@ -15,11 +15,17 @@ def main():
 
     print(logo)
 
+    models = {}
+
     arguments = search_argument_parser.parse_args()
 
     with open(arguments.model, 'rb') as reader:
-        models = pickle.loads(reader.read())
-    
+        models_data = pickle.loads(reader.read())
+
+        for side_effect in models_data:
+            if models_data[side_effect]['metrics']['f1'] >= arguments.minimum_f1_score:
+                models[side_effect] = pickle.loads(open(models_data[side_effect]['path'], 'rb').read())
+
     fileext = os.path.splitext(arguments.input)[1]
 
     if fileext == '.mol2':
@@ -41,7 +47,7 @@ def main():
                 'InchI_key': Chem.MolToInchiKey(mol),
                 'SMILES': Chem.MolToSmiles(mol),
                 'side_effects': {
-                    side_effect: float(models[side_effect].predict_proba([mol_data])[:,1]) for side_effect in tqdm(models) if models[side_effect].f1 >= arguments.minimum_f1_score
+                    side_effect: float(models[side_effect].predict_proba([mol_data])[:,1]) for side_effect in tqdm(models)
                 }
             }
         )
