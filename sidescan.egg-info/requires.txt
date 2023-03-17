@@ -13,3 +13,5 @@ flask_bootstrap
 importlib-metadata==4.13.0
 celery
 redis
+yagmail
+Flask-SQLAlchemy

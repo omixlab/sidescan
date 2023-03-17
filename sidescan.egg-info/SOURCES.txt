@@ -11,6 +11,7 @@ sidescan/search.py
 sidescan/server.py
 sidescan/train.py
 sidescan/worker.py
+sidescan/yagmail_test.py
 sidescan.egg-info/PKG-INFO
 sidescan.egg-info/SOURCES.txt
 sidescan.egg-info/dependency_links.txt

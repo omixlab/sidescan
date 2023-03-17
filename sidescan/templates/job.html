@@ -9,7 +9,7 @@ Molecula Enviada
 
 <div class="container">
   <div class="row">
-    <div class="ccol-md-4 col-lg-offset-4">
+    <div class="col-md-8 col-lg-offset-2">
 
       <h1 class="pt-5 pb-2">You're molecule has been processed!</h1>
       <h1 class="pt-5 pb-2">Your access link is: </h1>
@@ -21,8 +21,8 @@ Molecula Enviada
           Molecule InChI: {{ result['InchI'] }} <br>
           Molecule Key: {{ result['InchI_key']}} <br>
           Molecule Smile: {{ result['SMILES']}} <br>
-          <table border="1">
-            <tr><td>Molecule</td><td>Probability</td></tr> 
+          <table id="example" class="table table-dark table-hover table-bordered">
+            <tr><th>Side Effect</th><th>Probability</th></tr> 
           {% for effect in result['side_effects'] %}
           <tr>  <td>{{ effect }}</td> <td>{{result['side_effects'][effect]}} </td></tr> 
           {% endfor %}
@@ -30,7 +30,6 @@ Molecula Enviada
         {% endfor %}
       {% endif %}
     </div>
-</div>
 </div>
 
 {% endblock %}
