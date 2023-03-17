@@ -8,6 +8,7 @@ from imblearn.over_sampling import SMOTE
 from imblearn.under_sampling import TomekLinks, RandomUnderSampler
 from flaml import AutoML
 from tqdm import tqdm
+from uuid import uuid4
 import warnings
 import pandas as pd
 import numpy as np
@@ -30,7 +31,7 @@ def main():
 
     f1_scores = []
 
-    for column in tqdm(df_labels.columns):
+    for c, column in tqdm(enumerate(df_labels.columns)):
         
         y = df_labels[column]
 
@@ -42,10 +43,11 @@ def main():
             X_test, y_test = RandomUnderSampler().fit_resample(X_test, y_test)
         except:
             print('unable to train model for', column)
-        models[column] = ExtraTreesClassifier() #AutoML(task='classification', estimator_list=["lgbm"], time_budget=60, verbose=0)
-        models[column].fit(X_train, y_train)
+        models[column] = {'metrics': {}, 'path': os.path.join(arguments.directory, f'model_{c}.pickle')} 
+        model = ExtraTreesClassifier()
+        model.fit(X_train, y_train)
 
-        y_pred = models[column].predict(X_test)
+        y_pred = model.predict(X_test)
 
         try:
             f1 = f1_score(y_test, y_pred)
@@ -72,11 +74,14 @@ def main():
         except:
             accuracy = 0
 
-        models[column].f1 = f1
-        models[column].roc_auc = roc_auc
-        models[column].recall = recall
-        models[column].precision = precision
-        models[column].accuracy = accuracy
+        models[column]['metrics']['f1'] = f1
+        models[column]['metrics']['roc_auc'] = roc_auc
+        models[column]['metrics']['recall'] = recall
+        models[column]['metrics']['precision'] = precision
+        models[column]['metrics']['accuracy'] = accuracy
+
+        with open(models[column]['path'], 'wb') as writer:
+            writer.write(pickle.dumps(model))
 
         models_results.append({'effect': column, 'f1': f1, 'roc_auc': roc_auc, 'recall': recall, 'precision': precision, 'accuracy': accuracy})
 

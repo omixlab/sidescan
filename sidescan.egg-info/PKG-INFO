@@ -2,9 +2,12 @@ Metadata-Version: 2.1
 Name: sidescan
 Version: 0.0.2
 Summary: Prediction of side effects of drugs
+Home-page: UNKNOWN
 Author: Frederico Schmitt Kremer
 Author-email: fred.s.kremer@gmail.com
+License: UNKNOWN
 Keywords: chemoinformatics
+Platform: UNKNOWN
 Description-Content-Type: text/markdown
 
 # Sidescan
@@ -59,3 +62,4 @@ $ celery -A sidescan.worker.broker worker
 ```
 $ sidescan-server
 ```
+

@@ -4,3 +4,4 @@ sidescan-preprocess = sidescan.preprocess:main
 sidescan-search = sidescan.search:main
 sidescan-server = sidescan.server:main
 sidescan-train = sidescan.train:main
+
