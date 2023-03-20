@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}
 Home
@@ -6,7 +7,7 @@ Home
 
 {% block content %}
 
-<div class="container" >
+<div class="container upload-section" >
  <div class="pt-0 pb-5">
       <h1>Welcome to Sidescan!</h1>
 
@@ -22,4 +23,18 @@ Home
 
 </div>
 
+<div class="container email-section" >
+  <div class="pt-0 pb-5">
+    <p class="lead">{% if email %}Notifying{{ email }}{% else %}Get email notifications when your molecule is ready!{% endif %}!</p>
+    {{ wtf.quick_form(form) }}
+  </div>
+</div>
+
+<style>
+  .upload-section {margin-bottom: 50px;}
+  .email-section {
+    width: 50%;
+    margin-right: 38%;
+    }
+</style>
 {% endblock %}

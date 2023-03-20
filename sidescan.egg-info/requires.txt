@@ -15,3 +15,6 @@ celery
 redis
 yagmail
 Flask-SQLAlchemy
+flask-wtf
+flask_mail
+email_validator
