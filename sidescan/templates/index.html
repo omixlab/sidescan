@@ -10,31 +10,11 @@ Home
 <div class="container upload-section" >
  <div class="pt-0 pb-5">
       <h1>Welcome to Sidescan!</h1>
-
-      <p class="lead">Send your molecule here:</p>
-      <form method="POST" action="" enctype="multipart/form-data">
-        <p><input  type="file" name="file"></p>
-        <p><input  type="submit" value="Submit"></p>
-      </form>
-    
-    <p class="pt-5"><strong>{{ message }}</strong></p>
-
-  </div>
-
-</div>
-
-<div class="container email-section" >
-  <div class="pt-0 pb-5">
-    <p class="lead">{% if email %}Notifying{{ email }}{% else %}Get email notifications when your molecule is ready!{% endif %}!</p>
-    {{ wtf.quick_form(form) }}
+      <p class="lead">{{ wtf.quick_form(form) }}</p>
   </div>
 </div>
 
 <style>
   .upload-section {margin-bottom: 50px;}
-  .email-section {
-    width: 50%;
-    margin-right: 38%;
-    }
 </style>
 {% endblock %}

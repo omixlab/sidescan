@@ -4,8 +4,8 @@ from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import Email
+from wtforms import FileField, StringField, BooleanField, SubmitField
+from wtforms.validators import DataRequired, Email
 from flask_mail import Mail, Message
 from celery.result import AsyncResult
 import celery
@@ -25,12 +25,11 @@ app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
-app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Flasky]'
-app.config['FLASKY_MAIL_SENDER'] = 'Flasky Admin <flasky@example.com>'
+app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Sidescan]'
+app.config['FLASKY_MAIL_SENDER'] = 'no-reply <sidescan.noreply@gmail.com>'
 app.config['FLASKY_ADMIN'] = os.environ.get('FLASKY_ADMIN')
-class MailForm(FlaskForm):
-    email = StringField('Send to:', validators=[Email()])
-    submit = SubmitField('Notify me')
+
+
 
 def send_email(to, subject, template, **kwargs):
     msg = Message(app.config['FLASKY_MAIL_SUBJECT_PREFIX'] + ' ' + subject,
@@ -55,11 +54,19 @@ with app.app_context():
 
 from sidescan.worker import run_sidescan
 
+class UploadForm(FlaskForm):
+    file = FileField('Send your molecule here:', validators=[DataRequired()])
+    email = StringField('Get email notifications:', validators=[Email()])
+    notification = BooleanField('Notify me')
+    submit = SubmitField('Submit')
+
 @app.route('/')
 def index():
-    form = MailForm()
-    email = form.email.data
-    return render_template('index.html', form=form, email=email)
+    form = UploadForm()
+#    if form.validate_on_submit():
+#        email = session.get('email')
+#        send_email(email, 'Título', 'mail/sent')
+    return render_template('index.html', form=form)
 
 @app.route('/', methods=['POST'])
 def upload_files():
@@ -88,8 +95,7 @@ def upload_files():
         job.celery_job_id = str(async_result.task_id)
         job.status = 'QUEUED'
         db.session.commit()
-
-    send_email(app.config['FLASKY_ADMIN'], 'New User', 'mail/sent', job_id=job.id)
+    
 
     return redirect(f'/jobs/{job.id}')
 
