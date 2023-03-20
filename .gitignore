@@ -1,7 +1,6 @@
 data/*
 !data/.gitkeep
-sidescan/static/uploads/*
-!sidescan/static/uploads/.gitkeep
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
