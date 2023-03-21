@@ -12,8 +12,7 @@ Molecula Enviada
     <div class="col-md-8 col-lg-offset-2">
 
       <h1 class="pt-5 pb-2">You're molecule has been processed!</h1>
-      <h1 class="pt-5 pb-2">Your access link is: </h1>
-      <a href="/jobs/{{job_id}}">Results</a> 
+      <h2 class="pt-5 pb-2">Your access link is: <a href="/jobs/{{job_id}}">Job {{job_id}}</a> </h2>
       <h1>Status: {{result_status}}</h1>
       {% if result_status == "SUCCESS": %}
         {% for result in result_data %}

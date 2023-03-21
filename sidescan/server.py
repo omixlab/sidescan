@@ -6,12 +6,14 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import FileField, StringField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Email
-from flask_mail import Mail, Message
 from celery.result import AsyncResult
+import yagmail
 import celery
 import uuid
 import json
 
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 broker = celery.Celery(broker='redis://localhost:6379', backend='redis://localhost:6379')
@@ -19,24 +21,10 @@ bootstrap = Bootstrap(app)
 app.config['UPLOAD_PATH'] = 'sidescan/static/uploads'
 app.config['SECRET_KEY'] = 'hard to guess string'
 
-mail = Mail(app)
-app.config['MAIL_SERVER'] = 'smtp.googleemail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
-app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Sidescan]'
-app.config['FLASKY_MAIL_SENDER'] = 'no-reply <sidescan.noreply@gmail.com>'
-app.config['FLASKY_ADMIN'] = os.environ.get('FLASKY_ADMIN')
 
-
-
-def send_email(to, subject, template, **kwargs):
-    msg = Message(app.config['FLASKY_MAIL_SUBJECT_PREFIX'] + ' ' + subject,
-                  sender=app.config['FLASKY_MAIL_SENDER'], recipients=[to])
-    msg.body = render_template(template + '.txt', **kwargs)
-    msg.html = render_template(template + '.html', **kwargs)
-    mail.send(msg)
+yag = yagmail.SMTP(os.environ.get('MAIL_USERNAME'), os.environ.get('MAIL_PASSWORD'))
+contents = ['Dear sir/madman, your molecule has been sent successfully',
+            'Click here to not see your molecule.']
 
 
 db = SQLAlchemy()
@@ -56,16 +44,13 @@ from sidescan.worker import run_sidescan
 
 class UploadForm(FlaskForm):
     file = FileField('Send your molecule here:', validators=[DataRequired()])
-    email = StringField('Get email notifications:', validators=[Email()])
-    notification = BooleanField('Notify me')
-    submit = SubmitField('Submit')
+    email = StringField('Get email notifications (Optional)', validators=[Email()])
+    notify = BooleanField('Notify me')
+    submit = SubmitField('Submit', default=False)
 
 @app.route('/')
 def index():
-    form = UploadForm()
-#    if form.validate_on_submit():
-#        email = session.get('email')
-#        send_email(email, 'Título', 'mail/sent')
+    form = UploadForm()     
     return render_template('index.html', form=form)
 
 @app.route('/', methods=['POST'])
@@ -73,8 +58,12 @@ def upload_files():
 
     uploaded_file = request.files['file']
     filename = secure_filename(uploaded_file.filename)
+    email = request.form['email']
+    notify = request.form.get('notify')
+    if notify:
+        yag.send(email, 'Molécula enviada', contents)
 
-    job = Job()
+    job = Job(email=email)
     db.session.add(job)
     db.session.commit()
 
@@ -82,7 +71,7 @@ def upload_files():
     project_directory = os.path.join(app.config['UPLOAD_PATH'], project_id)
     project_output = os.path.join(project_directory, 'predictions.json')
 
-    print(project_directory)
+    print('Project directory: ', project_directory)
 
     os.system(f"mkdir -p {project_directory}")
     if filename != '':
@@ -111,7 +100,7 @@ def jobs(job_id):
         return render_template('job.html', result_status=result.status, job_id=job_id)
 
 def main():
-    app.run(port=5009)
+    app.run(port=5002)
     return
 
 if __name__ == '__main__':
