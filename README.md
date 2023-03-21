@@ -40,6 +40,11 @@ $ sidescan-train data/
 $ sidescan-search --input molecule.sdf --model data/models.pickle --output molecule.json
 ```
 
+## .env file is required to set env variables
+```
+MAIL_USERNAME=<email>
+MAIL_PASSWORD=<password>
+
 ## Run celery
 ```
 $ celery -A sidescan.worker.broker worker
