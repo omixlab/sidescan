@@ -38,6 +38,11 @@ MAIL_USERNAME=<email>
 MAIL_PASSWORD=<password>
 ```
 
+## Run redis
+```
+$ redis-server
+```
+
 ## Run celery
 ```
 $ celery -A sidescan.worker.broker worker
