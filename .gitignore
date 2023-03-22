@@ -2,7 +2,7 @@ data/*
 !data/.gitkeep
 sidescan/static/uploads/*
 !sidescan/static/uploads/.gitkeep
-.env
+
 
 
 # Byte-compiled / optimized / DLL files

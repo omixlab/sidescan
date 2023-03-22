@@ -16,4 +16,5 @@ redis
 yagmail
 Flask-SQLAlchemy
 flask-wtf
+email_validator
 python-dotenv
