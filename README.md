@@ -14,6 +14,7 @@ $ conda activate sidescan
 ```
 $ sudo apt-get install libxrender1
 $ sudo apt-get install redis-server
+$ sudo apt-get install mysql-server mysql-client
 ```
 
 ## Download datasets
